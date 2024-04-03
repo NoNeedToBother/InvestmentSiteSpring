@@ -2,6 +2,7 @@ package ru.kpfu.itis.paramonov.utils;
 
 public class Resources {
 
+    public final static String DEFAULT_PROFILE_PICTURE_URL = "https://res.cloudinary.com/dwsn91q46/image/upload/v1698496954/127523-n42lmrytsk5f8acijhwp_whbcgk.jpg";
     // password
     public final static String SHORT_PASSWORD_EXCEPTION = "The password length should be at least 8 characters";
 

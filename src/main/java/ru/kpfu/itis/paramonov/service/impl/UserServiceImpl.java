@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .build();
+        user.setProfilePicture(Resources.DEFAULT_PROFILE_PICTURE_URL);
         userRepository.save(user);
         return get(user.getLogin());
     }

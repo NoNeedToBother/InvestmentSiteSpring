@@ -13,10 +13,10 @@
                         <li><a href="/posts_submit" class="nav-link px-2 link-body-emphasis">Submit a post</a></li>
                     </#if>
                 </ul>
-                <#if user?has_content>
+                <#if user??>
                     <div class="dropdown text-end">
                         <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="${user.getPfpPicture()}" alt="mdo" width="48" height="48" class="rounded-circle">
+                            <img src="${user.profilePicture}" alt="mdo" width="48" height="48" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small">
                             <li><a class="dropdown-item" href="/profile">Profile</a></li>
@@ -24,8 +24,7 @@
                             <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
                         </ul>
                     </div>
-                </#if>
-                <#if !user?has_content>
+                <#else>
                     <form class="form-inline mt-2">
                         <button onclick="document.location='/login'" class="btn btn-secondary" type="button">Login</button>
                         <button onclick="document.location='/register'" class="btn btn-secondary" type="button">Register</button>

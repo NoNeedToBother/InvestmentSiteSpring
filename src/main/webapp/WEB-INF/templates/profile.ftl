@@ -27,25 +27,24 @@
                 <div class="col-lg-3">
                     <div class="card mb-4">
                         <div class="card-body text-center">
-                            <#if is_same_user == false>
-                                <img id="user_pfp" src="${profile_user.getPfpPicture()}" alt="avatar" class="img-fluid">
-                            </#if>
-                            <#if is_same_user == true>
-                                <form action="/upload?entity=pfp&id=${user.getId()}"  method="post" enctype="multipart/form-data">
-                                    <img id="user_pfp" src="${profile_user.getPfpPicture()}" alt="avatar" class="img-fluid">
+                            <#if isSameUser == false>
+                                <img id="user_pfp" src="${profile_user.profilePicture}" alt="avatar" class="img-fluid">
+                            <#else>
+                                <form action="/upload?entity=pfp&id=${user.id}"  method="post" enctype="multipart/form-data">
+                                    <img id="user_pfp" src="${profile_user.profilePicture}" alt="avatar" class="img-fluid">
                                     <input type="file" class="custom-file-input" id="img" name="img">
                                     <button type="submit" class="btn-outline-secondary" id="img_btn">Save</button>
                                 </form>
                             </#if>
-                            <h5 id="login" class="my-3">${profile_user.getLogin()}</h5>
-                            <#if is_same_user == false && user?has_content>
+                            <h5 id="login" class="my-3">${profile_user.login}</h5>
+                            <#if isSameUser == false && user?has_content>
                                 <div class="container">
                                     <div class="col-lg-12 justify-content-center">
                                         <div class="row justify-content-between">
                                             <div class="col lg-3"></div>
                                             <div class="col align-self-center lg-3">
                                                 <img src="https://logowik.com/content/uploads/images/940_like_icon.jpg" alt="like" class="img-fluid" id="like_img">
-                                                <div id="like_count">${profile_user.getLikeCount()}</div>
+                                                <div id="like_count">${(profile_user.likes)!0}</div>
                                             </div>
                                             <div class="col align-self-center lg-3">
                                                 <button type="button" id="like" class="btn btn-primary">Like</button>
@@ -55,14 +54,14 @@
                                     </div>
                                 </div>
                             </#if>
-                            <#if is_same_user == true || !user?has_content>
+                            <#if isSameUser == true || !user?has_content>
                                 <div class="container">
                                     <div class="col-lg-12 justify-content-center">
                                         <div class="row justify-content-between">
                                             <div class="col lg-3"></div>
                                             <div class="col align-self-center lg-3">
                                                 <img src="https://logowik.com/content/uploads/images/940_like_icon.jpg" alt="like" class="img-fluid" id="like_img">
-                                                <div id="like_count">${profile_user.getLikeCount()}</div>
+                                                <div id="like_count">${(profile_user.likes)!0}</div>
                                             </div>
                                             <div class="col lg-3"></div>
                                         </div>
@@ -80,11 +79,10 @@
                                     <p class="mb-0">Name</p>
                                 </div>
                                 <div class="col-sm-7">
-                                    <#if is_same_user == false>
-                                        <p id="name" class="text-muted mb-0">${profile_user.getName()}</p>
-                                    </#if>
-                                    <#if is_same_user == true>
-                                        <input id="input_name" name="input_name" type="text" class="d-flex form-control" aria-label="input_name" placeholder="${profile_user.getName()}">
+                                    <#if isSameUser == false>
+                                        <p id="name" class="text-muted mb-0">${(profile_user.name)!"Not specified"}</p>
+                                    <#else>
+                                        <input id="input_name" name="input_name" type="text" class="d-flex form-control" aria-label="input_name" placeholder="${(profile_user.name)!"Not specified"}">
                                     </#if>
                                 </div>
                             </div>
@@ -94,11 +92,10 @@
                                     <p class="mb-0">Last name</p>
                                 </div>
                                 <div class="col-sm-7">
-                                    <#if is_same_user == false>
-                                        <p id="lastname" class="text-muted mb-0">${profile_user.getLastname()}</p>
-                                    </#if>
-                                    <#if is_same_user == true>
-                                        <input id="input_lastname" name="input_lastname" type="text" class="d-flex form-control" aria-label="input_lastname" placeholder="${profile_user.getLastname()}">
+                                    <#if isSameUser == false>
+                                        <p id="lastname" class="text-muted mb-0">${(profile_user.lastname)!"Not specified"}</p>
+                                    <#else>
+                                        <input id="input_lastname" name="input_lastname" type="text" class="d-flex form-control" aria-label="input_lastname" placeholder="${(profile_user.lastname)!"Not specified"}">
                                     </#if>
                                 </div>
                             </div>
@@ -108,11 +105,10 @@
                                     <p class="mb-0">Email</p>
                                 </div>
                                 <div class="col-sm-7">
-                                    <#if is_same_user == false>
-                                        <p id="email" class="text-muted mb-0">${profile_user.getEmail()}</p>
-                                    </#if>
-                                    <#if is_same_user == true>
-                                        <input id="input_email" name="input_email" type="email" class="d-flex form-control" aria-label="input_email" placeholder="${profile_user.getEmail()}">
+                                    <#if isSameUser == false>
+                                        <p id="email" class="text-muted mb-0">${profile_user.email}</p>
+                                    <#else>
+                                        <input id="input_email" name="input_email" type="email" class="d-flex form-control" aria-label="input_email" placeholder="${profile_user.email}">
                                     </#if>
                                 </div>
                             </div>
@@ -122,7 +118,7 @@
                                     <p class="mb-0">Registration date</p>
                                 </div>
                                 <div class="col-sm-7">
-                                    <p id="lastname" class="text-muted mb-0">${profile_user.getDateRegistered()}</p>
+                                    <p id="lastname" class="text-muted mb-0">${profile_user.dateRegistered}</p>
                                 </div>
                             </div>
                             <hr>
@@ -131,11 +127,10 @@
                                     <p class="mb-0">Country</p>
                                 </div>
                                 <div class="col-sm-7">
-                                    <#if is_same_user == false>
-                                        <p id="country" class="text-muted mb-0">${profile_user.getCountry()}</p>
-                                    </#if>
-                                    <#if is_same_user == true>
-                                        <input id="input_country" type="text" name="input_country" class="d-flex form-control" aria-label="input_country" placeholder="${profile_user.getCountry()}">
+                                    <#if isSameUser == false>
+                                        <p id="country" class="text-muted mb-0">${(profile_user.country)!"Not specified"}</p>
+                                    <#else>
+                                        <input id="input_country" type="text" name="input_country" class="d-flex form-control" aria-label="input_country" placeholder="${(profile_user.country)!"Not specified"}">
                                     </#if>
                                 </div>
                             </div>
@@ -146,11 +141,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="col-sm-9">
-                                <#if is_same_user == false>
-                                    <p id="bio" class="mb-0 text-wrap">${profile_user.getBio()}</p>
-                                </#if>
-                                <#if is_same_user == true>
-                                    <textarea id="input_bio" class="mb-0 text-wrap" aria-label="input_bio" rows="8" cols="40" placeholder="${profile_user.getBio()}"></textarea>
+                                <#if isSameUser == false>
+                                    <p id="bio" class="mb-0 text-wrap">${(profile_user.bio)!"Not specified"}</p>
+                                <#else>
+                                    <textarea id="input_bio" class="mb-0 text-wrap" aria-label="input_bio" rows="8" cols="40" placeholder="${(profile_user.bio)!"Not specified"}"></textarea>
                                 </#if>
                             </div>
                         </div>
@@ -158,7 +152,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <#if is_same_user == true>
+                <#if isSameUser == true>
                     <button class="btn btn-primary" type="button" id="save_changes">Save changes</button>
                 </#if>
             </div>
