@@ -1,12 +1,10 @@
 package ru.kpfu.itis.paramonov.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.paramonov.dto.UserDto;
 import ru.kpfu.itis.paramonov.exceptions.RegistrationException;
-import ru.kpfu.itis.paramonov.exceptions.UserNotFoundException;
 import ru.kpfu.itis.paramonov.mappers.UserModelMapper;
 import ru.kpfu.itis.paramonov.model.User;
 import ru.kpfu.itis.paramonov.repository.UserRepository;
@@ -35,8 +33,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto get(int id) {
-        return null;
+    public UserDto get(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.map(value -> userModelMapper.fromModel(value)).orElse(null);
     }
 
     @Override
@@ -55,18 +54,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto save(String login, String email, String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {
-            throw new RegistrationException(Resources.PASSWORD_NOT_MATCH);
+            throw new RegistrationException(Resources.PASSWORD_NOT_MATCH_EXCEPTION);
         }
         PasswordValidator.Result result = passwordValidator.validate(password);
         if (result.getClass().equals(PasswordValidator.Result.Incorrect.class)) {
             throw new RegistrationException(
                     ((PasswordValidator.Result.Incorrect) result).getMessage());
         }
-        User user = new User();
-        user.setLogin(login);
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        User user = User.builder()
+                .login(login)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .build();
         userRepository.save(user);
-        return get(user.login);
+        return get(user.getLogin());
     }
 }

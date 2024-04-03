@@ -7,17 +7,17 @@ public class UserModelMapper implements ModelMapper<User, UserDto> {
     @Override
     public UserDto fromModel(User model) {
         if (model == null) return null;
-        int likes = (model.likes == null) ? 0 : model.likes;
+        int likes = (model.getLikes() == null) ? 0 : model.getLikes();
         return new UserDto(
-                model.id,
-                model.name,
-                model.lastname,
-                model.login,
-                model.profilePicture,
-                model.bio,
-                model.email,
-                model.dateRegistered,
-                model.country,
+                model.getId(),
+                model.getName(),
+                model.getLastname(),
+                model.getLogin(),
+                model.getProfilePicture(),
+                model.getBio(),
+                model.getEmail(),
+                model.getDateRegistered(),
+                model.getCountry(),
                 likes
         );
     }

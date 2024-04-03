@@ -8,7 +8,7 @@ public interface UserService {
 
     List<UserDto> getAll();
 
-    UserDto get(int id);
+    UserDto get(long id);
 
     UserDto get(String login);
 
