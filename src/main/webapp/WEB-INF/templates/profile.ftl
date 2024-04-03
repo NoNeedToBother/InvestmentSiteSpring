@@ -267,7 +267,8 @@
 
                 if (requestUrl !== "/getutil?task=update_user_data") {
                     $.get(requestUrl, function (response) {
-                        if (response === "ok") {
+                        let result = JSON.stringify(response)
+                        if (result.result === "ok") {
                             $.get("/getutil?task=get_user_data", function (response) {
                             } )
                         }

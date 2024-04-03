@@ -13,6 +13,7 @@ import ru.kpfu.itis.paramonov.service.UserService;
 import ru.kpfu.itis.paramonov.utils.Resources;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -69,5 +70,34 @@ public class UserServiceImpl implements UserService {
         user.setProfilePicture(Resources.DEFAULT_PROFILE_PICTURE_URL);
         userRepository.save(user);
         return get(user.getLogin());
+    }
+
+    @Override
+    public UserDto update(Map<String, String> params, Long id) {
+        for (String key : params.keySet()) {
+            String value = params.get(key);
+
+            switch (key) {
+                case "bio":
+                    userRepository.updateBioById(value, id);
+                    break;
+                case "country":
+                    userRepository.updateCountryById(value, id);
+                    break;
+                case "email":
+                    userRepository.updateEmailById(value, id);
+                    break;
+                case "lastname":
+                    userRepository.updateLastnameById(value, id);
+                    break;
+                case "name":
+                    userRepository.updateNameById(value, id);
+                    break;
+                case "login":
+                    userRepository.updateLoginById(value, id);
+                    break;
+            }
+        }
+        return get(id);
     }
 }

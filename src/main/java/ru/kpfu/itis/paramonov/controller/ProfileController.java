@@ -16,7 +16,7 @@ public class ProfileController {
     private UserService userService;
 
     @GetMapping
-    public String getProfilePage(@RequestParam(name = "id", required = false) Integer id,
+    public String getProfilePage(@RequestParam(name = "id", required = false) Long id,
                                  @SessionAttribute(value = Params.SESSION_USER_KEY, required = false) UserDto user, Model model) {
         if (id != null) {
             UserDto profileUser = userService.get(id);

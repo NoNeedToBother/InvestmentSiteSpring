@@ -38,7 +38,7 @@ public class Post {
     @CreationTimestamp
     private Timestamp datePosted;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "post_id")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Comment> comments;
 }

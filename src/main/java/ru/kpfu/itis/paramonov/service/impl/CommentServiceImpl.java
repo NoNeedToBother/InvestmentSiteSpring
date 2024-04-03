@@ -2,6 +2,8 @@ package ru.kpfu.itis.paramonov.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.paramonov.dto.CommentDto;
+import ru.kpfu.itis.paramonov.mappers.CommentModelMapper;
 import ru.kpfu.itis.paramonov.model.Comment;
 import ru.kpfu.itis.paramonov.model.Post;
 import ru.kpfu.itis.paramonov.model.User;
@@ -20,8 +22,10 @@ public class CommentServiceImpl implements CommentService {
 
     private UserRepository userRepository;
 
+    private CommentModelMapper commentModelMapper;
+
     @Override
-    public void save(long postId, long commenterId, String content) {
+    public CommentDto save(long postId, long commenterId, String content) {
         Post post = postRepository.findById(postId).orElseThrow(RuntimeException::new);
         User author = userRepository.findById(commenterId).orElseThrow(RuntimeException::new);
         Comment comment = Comment.builder()
@@ -29,6 +33,7 @@ public class CommentServiceImpl implements CommentService {
                 .post(post)
                 .content(content)
                 .build();
-        commentRepository.save(comment);
+        Comment res = commentRepository.saveAndFlush(comment);
+        return commentModelMapper.fromModel(res);
     }
 }

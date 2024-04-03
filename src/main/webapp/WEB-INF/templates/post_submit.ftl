@@ -12,7 +12,7 @@
 
 <#macro page_content>
     <div class="container" id="post_container">
-        <form action="/upload?entity=post&login=${user.getLogin()}" method="post" enctype="multipart/form-data">
+        <form action="/upload?entity=post&login=${user.login}" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="d-flex row align-content-center">

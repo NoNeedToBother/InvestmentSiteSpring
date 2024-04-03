@@ -14,4 +14,8 @@ public interface PostService {
 
     PostDto save(long posterId, String imageUrl, String content, String description, String title);
 
+    boolean checkTitle(String title);
+
+
+
 }

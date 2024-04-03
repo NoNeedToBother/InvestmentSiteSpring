@@ -3,6 +3,7 @@ package ru.kpfu.itis.paramonov.service;
 import ru.kpfu.itis.paramonov.dto.UserDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -15,4 +16,6 @@ public interface UserService {
     UserDto get(String login, String password);
 
     UserDto save(String login, String email, String password, String confirmPassword);
+
+    UserDto update(Map<String, String> params, Long id);
 }

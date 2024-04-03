@@ -58,4 +58,9 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
         return get(title);
     }
+
+    @Override
+    public boolean checkTitle(String title) {
+        return !postRepository.existsByTitle(title);
+    }
 }

@@ -1,5 +1,7 @@
 package ru.kpfu.itis.paramonov.service;
 
+import ru.kpfu.itis.paramonov.dto.CommentDto;
+
 public interface CommentService {
-    void save(long postId, long commenterId, String content);
+    CommentDto save(long postId, long commenterId, String content);
 }

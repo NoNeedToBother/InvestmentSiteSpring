@@ -18,7 +18,7 @@
 
 <#macro title>
     <#if post?has_content>
-        ${post.getTitle()}
+        ${post.title}
     </#if>
     <#if !post?has_content>
         No post found
@@ -32,8 +32,8 @@
                 <div class="d-flex row align-content-center">
                     <div class="col-3"></div>
                     <div class="col-6">
-                        <img src="${post.getImageUrl()}" alt="${post.getTitle()}" class="img-fluid mt-4 mx-auto align-self-center" width="300" height="200">
-                        <h2 class="display-5 align-self-center">${post.getTitle()}</h2>
+                        <img src="${post.imageUrl}" alt="${post.title}" class="img-fluid mt-4 mx-auto align-self-center" width="300" height="200">
+                        <h2 class="display-5 align-self-center">${post.title}</h2>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -41,17 +41,17 @@
                     <div>
                         <span class="font-weight-bold">By </span>
                         <div class="author-name">
-                            <a href="/profile?id=${post.getPosterId()}" rel="author" class="author-link">
-                                <span class="author-name font-weight-bold">${post.getPosterLogin()}</span>
+                            <a href="/profile?id=${author.id}" rel="author" class="author-link">
+                                <span class="author-name font-weight-bold">${author.login}</span>
                             </a>
                         </div>
                     </div>
                     <div>
-                        <time>${post.getDatePosted()?string("dd MMMM yyyy, HH:mm")}</time>
+                        <time>${post.datePosted?string("dd MMMM yyyy, HH:mm")}</time>
                     </div>
                 </div>
                 <div class="justify-content-between text-wrap pt-lg-3">
-                    <p class="article-content text-break text-justify" style="color: #000; margin-top: 10px;">${post.getContent()}</p>
+                    <p class="article-content text-break text-justify" style="color: #000; margin-top: 10px;">${post.content}</p>
                 </div>
             </div>
         </div>
@@ -63,16 +63,16 @@
                             <div class="comment">
                                 <div class="justify-content-between d-flex">
                                     <div class="user-avatar">
-                                        <a href="/profile?id=${comment.getCommenterId()}">
-                                            <span class="user-id font-weight-bold" style="color: #000;">${comment.getCommenterLogin()}</span>
+                                        <a href="/profile?id=${comment.commenter.id}">
+                                            <span class="user-id font-weight-bold" style="color: #000;">${comment.commenter.login}</span>
                                         </a>
                                     </div>
                                     <p class="timestamp font-weight-light m-1 text-right"
-                                       style="font-size: 12px;">${comment.getDatePublished()?string("dd MMMM yyyy, HH:mm")}</p>
+                                       style="font-size: 12px;">${comment.datePublished?string("dd MMMM yyyy, HH:mm")}</p>
                                 </div>
                                 <div class="comment-details">
                                     <div class="d-flex justify-content-between text-wrap">
-                                        <p class="comment-text text-break text-justify m-1">${comment.getContent()}</p>
+                                        <p class="comment-text text-break text-justify m-1">${comment.content}</p>
                                     </div>
                                 </div>
                             </div>
