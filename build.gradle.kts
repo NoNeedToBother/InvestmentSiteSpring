@@ -45,6 +45,7 @@ dependencies {
         implementation("com.google.code.gson:gson:${properties["gsonVersion"]}")
         implementation("com.cloudinary:cloudinary-core:${properties["cloudinaryVersion"]}")
         implementation("com.cloudinary:cloudinary-http44:${properties["cloudinaryVersion"]}")
+        implementation("org.thymeleaf:thymeleaf:3.1.2.RELEASE")
     }
 }
 

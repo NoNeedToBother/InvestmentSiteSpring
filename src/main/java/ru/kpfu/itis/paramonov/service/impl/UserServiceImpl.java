@@ -6,21 +6,27 @@ import org.springframework.stereotype.Service;
 import ru.kpfu.itis.paramonov.dto.UserDto;
 import ru.kpfu.itis.paramonov.exceptions.RegistrationException;
 import ru.kpfu.itis.paramonov.mappers.UserModelMapper;
+import ru.kpfu.itis.paramonov.model.Role;
 import ru.kpfu.itis.paramonov.model.User;
+import ru.kpfu.itis.paramonov.repository.RoleRepository;
 import ru.kpfu.itis.paramonov.repository.UserRepository;
 import ru.kpfu.itis.paramonov.security.PasswordValidator;
 import ru.kpfu.itis.paramonov.service.UserService;
 import ru.kpfu.itis.paramonov.utils.Resources;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
+    private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
 
@@ -57,19 +63,25 @@ public class UserServiceImpl implements UserService {
         if (!password.equals(confirmPassword)) {
             throw new RegistrationException(Resources.PASSWORD_NOT_MATCH_EXCEPTION);
         }
-        PasswordValidator.Result result = passwordValidator.validate(password);
-        if (result.getClass().equals(PasswordValidator.Result.Incorrect.class)) {
-            throw new RegistrationException(
-                    ((PasswordValidator.Result.Incorrect) result).getMessage());
+        else {
+            PasswordValidator.Result result = passwordValidator.validate(password);
+            if (result.getClass().equals(PasswordValidator.Result.Incorrect.class)) {
+                throw new RegistrationException(
+                        ((PasswordValidator.Result.Incorrect) result).getMessage());
+            } else {
+                User user = User.builder()
+                        .login(login)
+                        .email(email)
+                        .password(passwordEncoder.encode(password))
+                        .build();
+                user.setProfilePicture(Resources.DEFAULT_PROFILE_PICTURE_URL);
+                userRepository.save(user);
+                Role role = roleRepository.findByName(Role.Value.USER.toString());
+                user = userRepository.findByLogin(login);
+                userRepository.addRole(role.getId(), user.getId());
+                return get(login);
+            }
         }
-        User user = User.builder()
-                .login(login)
-                .email(email)
-                .password(passwordEncoder.encode(password))
-                .build();
-        user.setProfilePicture(Resources.DEFAULT_PROFILE_PICTURE_URL);
-        userRepository.save(user);
-        return get(user.getLogin());
     }
 
     @Override
@@ -105,5 +117,11 @@ public class UserServiceImpl implements UserService {
     public UserDto update(String profilePicture, Long id) {
         userRepository.updateProfilePictureById(profilePicture, id);
         return get(id);
+    }
+
+    @Override
+    public void addRole(Role.Value roleValue, Long id) {
+        Role role = roleRepository.findByName(roleValue.name());
+        userRepository.addRole(role.getId(), id);
     }
 }

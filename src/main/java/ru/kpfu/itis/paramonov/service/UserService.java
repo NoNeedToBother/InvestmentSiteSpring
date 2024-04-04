@@ -1,6 +1,7 @@
 package ru.kpfu.itis.paramonov.service;
 
 import ru.kpfu.itis.paramonov.dto.UserDto;
+import ru.kpfu.itis.paramonov.model.Role;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,6 @@ public interface UserService {
     UserDto update(Map<String, String> params, Long id);
 
     UserDto update(String profilePicture, Long id);
+
+    void addRole(Role.Value roleValue, Long id);
 }

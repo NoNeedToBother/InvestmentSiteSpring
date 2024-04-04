@@ -45,7 +45,7 @@ public class User {
 
     private Integer likes;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

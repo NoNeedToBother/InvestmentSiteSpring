@@ -1,10 +1,8 @@
 package ru.kpfu.itis.paramonov.mappers;
 
-import lombok.extern.slf4j.Slf4j;
 import ru.kpfu.itis.paramonov.dto.UserDto;
 import ru.kpfu.itis.paramonov.model.User;
 
-@Slf4j
 public class UserModelMapper implements ModelMapper<User, UserDto> {
     @Override
     public UserDto fromModel(User model) {

@@ -13,6 +13,10 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role {
 
+    public enum Value {
+        USER, ADMIN
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

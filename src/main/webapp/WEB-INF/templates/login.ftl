@@ -1,6 +1,7 @@
 <#include "base.ftl">
 
 <#macro title>Login</#macro>
+<html xmlns:th="http://www.thymeleaf.org">
 <style>
     html,
     body {
@@ -35,7 +36,7 @@
 </style>
 <#macro content>
     <main class="form-signin w-100 m-auto">
-        <form method="post">
+        <form th:action="@{/login}" method="post">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating">
