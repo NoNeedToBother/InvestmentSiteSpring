@@ -43,6 +43,8 @@ dependencies {
         implementation("org.slf4j:slf4j-api:${properties["slf4jVersion"]}")
         implementation("org.slf4j:slf4j-simple:${properties["slf4jVersion"]}")
         implementation("com.google.code.gson:gson:${properties["gsonVersion"]}")
+        implementation("com.cloudinary:cloudinary-core:${properties["cloudinaryVersion"]}")
+        implementation("com.cloudinary:cloudinary-http44:${properties["cloudinaryVersion"]}")
     }
 }
 

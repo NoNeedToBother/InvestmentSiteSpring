@@ -100,4 +100,10 @@ public class UserServiceImpl implements UserService {
         }
         return get(id);
     }
+
+    @Override
+    public UserDto update(String profilePicture, Long id) {
+        userRepository.updateProfilePictureById(profilePicture, id);
+        return get(id);
+    }
 }

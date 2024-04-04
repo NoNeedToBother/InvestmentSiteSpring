@@ -12,7 +12,7 @@
 
 <#macro page_content>
     <div class="container" id="post_container">
-        <form action="/upload?entity=post&login=${user.login}" method="post" enctype="multipart/form-data">
+        <form action="/upload?entity=post&id=${user.id}" method="post" enctype="multipart/form-data">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="d-flex row align-content-center">
@@ -41,6 +41,7 @@
                     <div class="input-group mt-3 mb-4">
                         <textarea class="form-control" aria-label="With textarea" rows="8" placeholder="Post content" id="content" name="content" required></textarea>
                     </div>
+                    <div id="warning_msg"></div>
                 </div>
             </div>
             <div class="row">
@@ -84,6 +85,17 @@
                             break
                     }
                 })
+            }
+        })
+        $("#content").on("input", function () {
+            let text = $(this).val()
+            if (text.length >= 500) {
+                $("#warning_msg").text("Post is too long, should be less than 500 charactes")
+                document.getElementById("submit_btn").setAttribute("disabled", "")
+            }
+            else {
+                $("#warning_msg").text("")
+                document.getElementById("submit_btn").removeAttribute("disabled")
             }
         })
 

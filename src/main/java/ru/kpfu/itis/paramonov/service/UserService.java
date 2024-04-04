@@ -18,4 +18,6 @@ public interface UserService {
     UserDto save(String login, String email, String password, String confirmPassword);
 
     UserDto update(Map<String, String> params, Long id);
+
+    UserDto update(String profilePicture, Long id);
 }

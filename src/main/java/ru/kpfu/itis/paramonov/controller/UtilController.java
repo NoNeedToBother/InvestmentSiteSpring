@@ -13,6 +13,7 @@ import ru.kpfu.itis.paramonov.utils.Params;
 import ru.kpfu.itis.paramonov.utils.Result;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.http.HTTPException;
 import java.util.Map;
 
 @RequestMapping("/getutil")
@@ -47,7 +48,7 @@ public class UtilController {
                 Long userId = Long.parseLong(params.get(Params.REQUEST_ID_PARAM));
                 return updateUserData(params, userId);
             default:
-                return toJson(new Result<>("not_ok", null));
+                throw new HTTPException(Params.BAD_REQUEST_HTTP_CODE);
         }
     }
 

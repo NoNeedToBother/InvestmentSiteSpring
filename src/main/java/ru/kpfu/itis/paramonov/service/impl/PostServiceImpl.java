@@ -10,11 +10,13 @@ import ru.kpfu.itis.paramonov.repository.PostRepository;
 import ru.kpfu.itis.paramonov.repository.UserRepository;
 import ru.kpfu.itis.paramonov.service.PostService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;

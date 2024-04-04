@@ -1,7 +1,6 @@
 package ru.kpfu.itis.paramonov.model;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -53,4 +52,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Post> posts;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 }

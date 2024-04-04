@@ -2,6 +2,8 @@ package ru.kpfu.itis.paramonov.utils;
 
 public class Params {
 
+    public final static int BAD_REQUEST_HTTP_CODE = 400;
+
     //session and models params
     public final static String SESSION_USER_KEY = "user";
 
@@ -33,4 +35,16 @@ public class Params {
     public static final String TASK_UPDATE_COMMENTS = "update_comments";
     public static final String TASK_UPDATE_USER_DATA = "update_user_data";
     public static final String REQUEST_ID_PARAM = "id";
+    public static final String REQUEST_ENTITY_PARAM = "entity";
+
+    public static final String REQUEST_ENTITY_POST_PARAM = "post";
+
+    public static final String REQUEST_ENTITY_PROFILE_PICTURE_PARAM = "pfp";
+
+    public static final String POST_REQUEST_POST_TITLE_KEY = "post_title";
+
+    public static final String POST_REQUEST_CONTENT_KEY = "content";
+
+    public static final String POST_REQUEST_DESC_KEY = "short_desc";
+
 }

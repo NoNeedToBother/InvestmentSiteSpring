@@ -130,23 +130,26 @@
 
             $.get("/getutil?task=update_comments&post_id=" + $.getUrlParam("id") + "&commenter_id=" + user.id + "&content=" + comment
                 + "&commenter_login=" + user.login, function (response) {
-                switch (response) {
+                json = JSON.parse(response)
+                switch (json.result) {
                     case "not_ok":
                         break
                     default:
-                        $("#commentsSection").append(
+                        comment = json.entity
+                        commenter = comment.commenter
+                        $("#commentsSection").prepend(
                             $("<div>").addClass("comment").append(
                                 $("<div>").addClass("justify-content-between").css("display", "flex").append(
                                     $("<div>").addClass("user-avatar").append(
-                                        $("<a>").attr("href", "/profile?id=" + user.id).append(
-                                            $("<span>").addClass("user-id font-weight-bold").css("color", "#000").text(user.login)
+                                        $("<a>").attr("href", "/profile?id=" + commenter.id).append(
+                                            $("<span>").addClass("user-id font-weight-bold").css("color", "#000").text(commenter.login)
                                         )
                                     ),
-                                    $("<p>").addClass("timestamp font-weight-light m-1 text-right").css("font-size", "12px").text(response)
+                                    $("<p>").addClass("timestamp font-weight-light m-1 text-right").css("font-size", "12px").text(comment.datePublished)
                                 ),
                                 $("<div>").addClass("comment-details").append(
                                     $("<div>").addClass("justify-content-between text-wrap").css("display", "flex").append(
-                                        $("<p>").addClass("comment-text text-break text-justify m-1").text(comment)
+                                        $("<p>").addClass("comment-text text-break text-justify m-1").text(comment.content)
                                     )
                                 )
                             )

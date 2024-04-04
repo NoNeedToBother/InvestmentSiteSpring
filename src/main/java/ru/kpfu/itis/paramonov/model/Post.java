@@ -29,6 +29,7 @@ public class Post {
     @Column(unique = true)
     private String title;
 
+    @Column(length = 500)
     private String content;
 
     @Column(name = "description")

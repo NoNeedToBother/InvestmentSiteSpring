@@ -269,8 +269,7 @@
                     $.get(requestUrl, function (response) {
                         let result = JSON.stringify(response)
                         if (result.result === "ok") {
-                            $.get("/getutil?task=get_user_data", function (response) {
-                            } )
+                            alert("Changes are applied!")
                         }
                     })
                 }
