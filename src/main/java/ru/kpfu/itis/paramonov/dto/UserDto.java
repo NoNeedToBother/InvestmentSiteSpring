@@ -30,5 +30,7 @@ public class UserDto {
     private Integer likes;
 
     private List<Long> likeSenders;
+
+    private List<RoleDto> roles;
 }
 

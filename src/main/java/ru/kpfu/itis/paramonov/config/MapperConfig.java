@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import ru.kpfu.itis.paramonov.mappers.CommentModelMapper;
 import ru.kpfu.itis.paramonov.mappers.PostModelMapper;
+import ru.kpfu.itis.paramonov.mappers.RoleModelMapper;
 import ru.kpfu.itis.paramonov.mappers.UserModelMapper;
 
 @Configuration
@@ -13,8 +14,10 @@ public class MapperConfig {
 
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public UserModelMapper userModelMapper() {
-        return new UserModelMapper();
+    public UserModelMapper userModelMapper(RoleModelMapper roleModelMapper) {
+        return new UserModelMapper(
+                roleModelMapper
+        );
     }
 
     @Bean
@@ -32,5 +35,11 @@ public class MapperConfig {
                 commentModelMapper,
                 userModelMapper
         );
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public RoleModelMapper roleModelMapper() {
+        return new RoleModelMapper();
     }
 }
