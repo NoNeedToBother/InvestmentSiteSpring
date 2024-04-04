@@ -60,4 +60,12 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Comment> comments;
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_likes",
+            joinColumns = @JoinColumn(name = "receiver_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "sender_id", referencedColumnName = "id")
+    )
+    private Set<User> likeSenders;
 }

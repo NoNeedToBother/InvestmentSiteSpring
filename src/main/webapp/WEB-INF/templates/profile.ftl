@@ -47,7 +47,7 @@
                                                 <div id="like_count">${(profile_user.likes)!0}</div>
                                             </div>
                                             <div class="col align-self-center lg-3">
-                                                <button type="button" id="like" class="btn btn-primary">Like</button>
+                                                <button type="button" id="like" class="btn btn-primary" disabled>Like</button>
                                             </div>
                                             <div class="col lg-3"></div>
                                         </div>
@@ -172,29 +172,29 @@
         } )
         if (typeof user !== undefined) {
             let profileUserId = $.getUrlParam("id")
-            if (typeof profileUserId !== "undefined") {
-                let likeSenderId = user.id
-                if (profileUserId !== likeSenderId) {
-                    $.get("/getutil?task=check_likes&receiver_id=" + $.getUrlParam("id") + "&sender_id=" + user.id,
-                        function (response) {
-                            switch (response) {
-                                case "not_ok":
-                                    document.getElementById("like").setAttribute("disabled", "")
-                                    break
-                                case "ok":
+            var delayInMilliseconds = 250;
+            setTimeout(function() {
+                if (typeof profileUserId !== "undefined") {
+                    let likeSenderId = user.id
+                    if (profileUserId !== likeSenderId) {
+                        $.get("/getutil?task=check_likes&receiver_id=" + $.getUrlParam("id") + "&sender_id=" + user.id,
+                            function (response) {
+                                if (response === "ok") {
+                                    document.getElementById("like").removeAttribute("disabled")
                                     $(document).on("click", $("#like"), function () {
                                         $.get("/getutil?task=update_likes&receiver_id=" + $.getUrlParam("id") + "&sender_id=" + user.id,
                                             function (response) {
-                                                $("#like_count").text(response)
+                                                json = JSON.parse(response);
+                                                $("#like_count").text(json.entity)
                                                 document.getElementById("like").setAttribute("disabled", "")
                                             }
                                         )
                                     })
-                                    break
-                            }
-                        })
+                                }
+                            })
+                    }
                 }
-            }
+            }, delayInMilliseconds);
             function readURL(input) {
 
                 if (input.files && input.files[0]) {
@@ -215,52 +215,57 @@
             $("#save_changes").on("click", function () {
                 let requestUrl = "/getutil?task=update_user_data&" + "id=" + user.id
 
-                let name = $("#input_name").val()
+                let input_name = $("#input_name")
+                let input_lastname = $("#input_lastname")
+                let input_email = $("#input_email")
+                let input_bio = $("#input_bio")
+                let input_country = $("#input_country")
+                let name = input_name.val()
                 if (typeof name !== "undefined") {
-                    $("#input_name").val("")
+                    input_name.val("")
                     name = name.trim()
                     if (name) {
-                        $("#input_name").attr("placeholder", name)
+                        input_name.attr("placeholder", name)
                         requestUrl = requestUrl + "&name=" + name
                     }
                 }
 
-                let lastname = $("#input_lastname").val()
+                let lastname = input_lastname.val()
                 if (typeof lastname !== "undefined") {
-                    $("#input_lastname").val("")
+                    input_lastname.val("")
                     lastname = lastname.trim()
                     if (lastname) {
-                        $("#input_lastname").attr("placeholder", lastname)
+                        input_lastname.attr("placeholder", lastname)
                         requestUrl = requestUrl + "&lastname=" + lastname
                     }
                 }
 
-                let email = $("#input_email").val()
+                let email = input_email.val()
                 if (typeof email !== "undefined") {
-                    $("#input_email").val("")
+                    input_email.val("")
                     email = email.trim()
                     if (email) {
-                        $("#input_email").attr("placeholder", email)
+                        input_email.attr("placeholder", email)
                         requestUrl = requestUrl + "&email=" + email
                     }
                 }
 
-                let bio = $("#input_bio").val()
+                let bio = input_bio.val()
                 if (typeof bio !== "undefined") {
-                    $("#input_bio").val("")
+                    input_bio.val("")
                     bio = bio.trim()
                     if (bio) {
-                        $("#input_bio").attr("placeholder", bio)
+                        input_bio.attr("placeholder", bio)
                         requestUrl = requestUrl + "&bio=" + bio
                     }
                 }
 
-                let country = $("#input_country").val()
+                let country = input_country.val()
                 if (typeof country !== "undefined") {
                     country = country.trim()
-                    $("#input_country").val("")
+                    input_country.val("")
                     if (country) {
-                        $("#input_country").attr("placeholder", country)
+                        input_country.attr("placeholder", country)
                         requestUrl = requestUrl + "&country=" + country
                     }
                 }

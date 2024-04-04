@@ -47,6 +47,12 @@ public class UtilController {
             case Params.TASK_UPDATE_USER_DATA:
                 Long userId = Long.parseLong(params.get(Params.REQUEST_ID_PARAM));
                 return updateUserData(params, userId);
+            case Params.TASK_CHECK_LIKES:
+                if(checkLikes(params)) return "ok";
+                else return "not_ok";
+            case Params.TASK_UPDATE_LIKES:
+                Integer likeCount = updateLikes(params);
+                return toJson(new Result<>("ok", likeCount));
             default:
                 throw new HTTPException(Params.BAD_REQUEST_HTTP_CODE);
         }
@@ -74,6 +80,24 @@ public class UtilController {
         } catch (Exception e) {
             return "not_ok";
         }
+    }
+
+    private boolean checkLikes(Map<String, String> params) {
+        Long receiverId = Long.parseLong(params.get("receiver_id"));
+        Long senderId = Long.parseLong(params.get("sender_id"));
+        if (receiverId.equals(senderId)) return false;
+        UserDto receiver = userService.get(receiverId);
+        for (Long senderIdFromReceiver : receiver.getLikeSenders()) {
+            if (senderId.equals(senderIdFromReceiver)) return false;
+        }
+        return true;
+    }
+
+    private Integer updateLikes(Map<String, String> params) {
+        Long receiverId = Long.parseLong(params.get("receiver_id"));
+        Long senderId = Long.parseLong(params.get("sender_id"));
+        userService.updateLikes(receiverId, senderId);
+        return userService.get(receiverId).getLikes();
     }
 
     private String toJson(Object entity) {

@@ -3,6 +3,10 @@ package ru.kpfu.itis.paramonov.mappers;
 import ru.kpfu.itis.paramonov.dto.UserDto;
 import ru.kpfu.itis.paramonov.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class UserModelMapper implements ModelMapper<User, UserDto> {
     @Override
     public UserDto fromModel(User model) {
@@ -18,7 +22,16 @@ public class UserModelMapper implements ModelMapper<User, UserDto> {
                 model.getEmail(),
                 model.getDateRegistered(),
                 model.getCountry(),
-                likes
+                likes,
+                getLikeSenders(model.getLikeSenders())
         );
+    }
+
+    private List<Long> getLikeSenders(Set<User> likeSenders) {
+        List<Long> res = new ArrayList<>();
+        for (User likeSender: likeSenders) {
+            res.add(likeSender.getId());
+        }
+        return res;
     }
 }

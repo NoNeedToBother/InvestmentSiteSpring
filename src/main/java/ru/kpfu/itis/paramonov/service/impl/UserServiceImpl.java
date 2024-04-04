@@ -73,8 +73,9 @@ public class UserServiceImpl implements UserService {
                         .login(login)
                         .email(email)
                         .password(passwordEncoder.encode(password))
+                        .likes(0)
+                        .profilePicture(Resources.DEFAULT_PROFILE_PICTURE_URL)
                         .build();
-                user.setProfilePicture(Resources.DEFAULT_PROFILE_PICTURE_URL);
                 userRepository.save(user);
                 Role role = roleRepository.findByName(Role.Value.USER.toString());
                 user = userRepository.findByLogin(login);
@@ -123,5 +124,13 @@ public class UserServiceImpl implements UserService {
     public void addRole(Role.Value roleValue, Long id) {
         Role role = roleRepository.findByName(roleValue.name());
         userRepository.addRole(role.getId(), id);
+    }
+
+    @Override
+    @Transactional
+    public UserDto updateLikes(Long receiverId, Long senderId) {
+        userRepository.updateLikes(receiverId, senderId);
+        userRepository.addLike(receiverId);
+        return get(receiverId);
     }
 }

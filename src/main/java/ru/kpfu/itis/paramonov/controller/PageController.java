@@ -20,4 +20,9 @@ public class PageController {
     public String shares() {
         return "shares";
     }
+
+    @GetMapping("/")
+    public String index() {
+        return "about";
+    }
 }

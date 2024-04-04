@@ -55,4 +55,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Transactional
     void addRole(@Param("roleId") Long roleId, @Param("userId") Long id);
+
+    @Query(value = "insert into user_likes(receiver_id, sender_id) values (:receiverId, :senderId)", nativeQuery = true)
+    @Modifying
+    @Transactional
+    void updateLikes(@Param("receiverId") Long receiverId, @Param("senderId") Long senderId);
+
+    @Query(value = "update User u set u.likes = u.likes + 1 where u.id = :receiverId")
+    @Modifying
+    @Transactional
+    void addLike(@Param("receiverId") Long receiverId);
 }

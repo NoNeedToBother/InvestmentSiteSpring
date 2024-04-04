@@ -47,4 +47,6 @@ public class Params {
 
     public static final String POST_REQUEST_DESC_KEY = "short_desc";
 
+    public static final String TASK_CHECK_LIKES = "check_likes";
+    public static final String TASK_UPDATE_LIKES = "update_likes";
 }

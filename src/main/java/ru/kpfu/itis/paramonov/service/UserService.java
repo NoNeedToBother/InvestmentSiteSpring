@@ -23,4 +23,6 @@ public interface UserService {
     UserDto update(String profilePicture, Long id);
 
     void addRole(Role.Value roleValue, Long id);
+
+    UserDto updateLikes(Long receiverId, Long senderId);
 }
